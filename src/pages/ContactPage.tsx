@@ -10,7 +10,13 @@ export function ContactPage() {
   const [params] = useSearchParams();
   return (
     <div className="route-page">
-      <section className="page-intro">
+      <section className="page-intro photographic-intro ">
+        <img
+          className="cinematic-backdrop"
+          src="/images/namib-dunes.jpg"
+          alt="Sculpted orange dunes in the Namib Desert"
+          fetchPriority="high"
+        />
         <span className="eyebrow">LET’S START SOMETHING WONDERFUL</span>
         <h1>
           Your safari.
@@ -30,8 +36,8 @@ export function ContactPage() {
         <aside className="contact-panel">
           <img
             className="contact-photo"
-            src="/images/plains.jpg"
-            alt="A glimpse of the African wilderness"
+            src="/images/elephants-golden.jpg"
+            alt="An elephant and calf in golden evening light"
           />
           <span className="eyebrow">A PERSONAL CONNECTION</span>
           <h2>

@@ -40,3 +40,10 @@ Images are stored locally in `public/images` and sourced from Unsplash:
 ## Validation
 
 Production build and ESLint. Browser checks cover all six pages at desktop, tablet, and mobile widths, mobile navigation, destination filters, selected-trip handoff, FAQ expansion, and enquiry success/error responses with a mocked API. Live payment, email delivery, and Bokun availability are not verified.
+
+Additional cinematic photography (Unsplash):
+
+- Golden-hour elephants, Dana Luig: https://unsplash.com/photos/snTfL3nnj8g
+- Maasai Mara giraffe, Carlos Torres: https://unsplash.com/photos/4rnGfF7XbYY
+- Namib dunes, Andreas Felske: https://unsplash.com/photos/nt66_G8DCBM
+- Resting lion, Steffen Wienberg: https://unsplash.com/photos/Dl4foQja1r8

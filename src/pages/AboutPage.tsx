@@ -2,7 +2,13 @@ import { Link } from "react-router-dom";
 export function AboutPage() {
   return (
     <div className="route-page">
-      <section className="page-intro">
+      <section className="page-intro photographic-intro ">
+        <img
+          className="cinematic-backdrop"
+          src="/images/elephants-golden.jpg"
+          alt="Elephants in warm evening light"
+          fetchPriority="high"
+        />
         <span className="eyebrow">THE WILDTRACK WAY</span>
         <h1>
           A love of Africa.
@@ -16,7 +22,10 @@ export function AboutPage() {
       </section>
       <section className="editorial-section">
         <div className="editorial-image">
-          <img src="/images/plains.jpg" alt="An expansive African wilderness" />
+          <img
+            src="/images/giraffe-savannah.jpg"
+            alt="A giraffe beneath the wide Maasai Mara sky"
+          />
           <span>A DIFFERENT PERSPECTIVE</span>
         </div>
         <div className="editorial-copy">

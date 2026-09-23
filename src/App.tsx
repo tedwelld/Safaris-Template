@@ -17,6 +17,15 @@ const navItems = [
 const supportEmail =
   import.meta.env.VITE_EMAIL_SUPPORT || "reservations@wildtracktravel.com";
 
+const bottomNavItems = [
+  { label: "Home", to: "/", icon: "pi-home" },
+  { label: "Safaris", to: "/safaris", icon: "pi-compass" },
+  { label: "Plan", to: "/booking", icon: "pi-calendar" },
+  { label: "About", to: "/about", icon: "pi-users" },
+  { label: "Contact", to: "/contact", icon: "pi-envelope" },
+  { label: "FAQ", to: "/faq", icon: "pi-question-circle" },
+];
+
 function Brand() {
   return (
     <Link to="/" className="brand" aria-label="Wildtrack Safaris home">
@@ -116,11 +125,24 @@ function App() {
         </Routes>
       </main>
       <section className="journey-cta">
+        <img
+          className="cinematic-backdrop"
+          src="/images/elephants-golden.jpg"
+          alt=""
+          loading="lazy"
+          decoding="async"
+        />
         <div>
           <span className="eyebrow">YOUR NEXT GREAT STORY</span>
-          <h2>It begins with a conversation.</h2>
+          <h2>
+            It begins with
+            <br />a conversation.
+          </h2>
+          <p>
+            The golden light. The open horizon. Your own unforgettable chapter.
+          </p>
         </div>
-        <Link className="primary-btn" to="/contact">
+        <Link className="light-btn" to="/contact">
           Let’s dream it up <span>↗</span>
         </Link>
       </section>
@@ -153,6 +175,20 @@ function App() {
           <span>Made for the extraordinary.</span>
         </div>
       </footer>
+      <nav className="bottom-nav" aria-label="Quick navigation">
+        {bottomNavItems.map((item) => (
+          <NavLink
+            key={item.to}
+            to={item.to}
+            end={item.to === "/"}
+            className="bottom-nav-link"
+            onClick={() => setMenuOpen(false)}
+          >
+            <i className={`pi ${item.icon}`} aria-hidden="true" />
+            <span>{item.label}</span>
+          </NavLink>
+        ))}
+      </nav>
     </div>
   );
 }

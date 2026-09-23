@@ -18,7 +18,13 @@ export function BookingPage() {
   }, []);
   return (
     <div className="route-page">
-      <section className="page-intro">
+      <section className="page-intro photographic-intro ">
+        <img
+          className="cinematic-backdrop"
+          src="/images/safari.jpg"
+          alt="A game drive at sunset"
+          fetchPriority="high"
+        />
         <span className="eyebrow">
           THE FIRST STEP TO SOMETHING EXTRAORDINARY
         </span>

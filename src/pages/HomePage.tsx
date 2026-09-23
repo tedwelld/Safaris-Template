@@ -61,6 +61,63 @@ export function HomePage() {
           Discover the Wildtrack way <span>↗</span>
         </Link>
       </section>
+      <section
+        className="photo-story section-wrap"
+        aria-labelledby="photo-story-heading"
+      >
+        <div className="section-heading">
+          <div>
+            <span className="eyebrow">A CONTINENT THAT MOVES YOU</span>
+            <h2 id="photo-story-heading">
+              Let the view
+              <br />
+              <em>take your breath away.</em>
+            </h2>
+          </div>
+          <p>
+            Wild encounters. Sculpted landscapes.
+            <br />A different kind of beautiful, every day.
+          </p>
+        </div>
+        <div className="photo-story-grid">
+          <figure className="landscape-frame">
+            <img
+              src="/images/namib-dunes.jpg"
+              alt="Light and shadow across the sweeping orange dunes of Namibia"
+              loading="lazy"
+              decoding="async"
+            />
+            <figcaption>
+              <span className="eyebrow">THE ART OF NATURE</span>
+              <span>Horizons without an end.</span>
+            </figcaption>
+          </figure>
+          <figure className="portrait-frame">
+            <img
+              src="/images/giraffe-savannah.jpg"
+              alt="A giraffe standing tall beneath dramatic clouds in the Maasai Mara"
+              loading="lazy"
+              decoding="async"
+            />
+            <figcaption>
+              <span className="eyebrow">A MOMENT OF CONNECTION</span>
+              <span>Wonder, in the wild.</span>
+            </figcaption>
+          </figure>
+          <figure className="wildlife-frame">
+            <img
+              src="/images/lion-grasslands.jpg"
+              alt="A male lion resting in sunlit grass"
+              loading="lazy"
+              decoding="async"
+            />
+            <figcaption>
+              <span className="eyebrow">ON NATURE’S TIME</span>
+              <span>Stay a little longer.</span>
+            </figcaption>
+          </figure>
+        </div>
+      </section>
       <section className="collection-section section-wrap">
         <div className="section-heading">
           <div>
@@ -80,7 +137,7 @@ export function HomePage() {
             {
               name: "Kenya",
               tag: "THE HEART OF THE SAVANNAH",
-              image: "safari",
+              image: "giraffe-savannah",
               filter: "Kenya",
             },
             {
@@ -92,7 +149,7 @@ export function HomePage() {
             {
               name: "Botswana",
               tag: "WILDERNESS, WITHOUT LIMITS",
-              image: "wildlife",
+              image: "elephants-golden",
               filter: "Botswana",
             },
           ].map((item) => (
@@ -157,27 +214,36 @@ export function HomePage() {
         <div className="style-grid">
           {[
             {
-              icon: "pi-compass",
+              image: "plains",
+              alt: "Zebras moving through golden grass",
               title: "The classic safari",
               text: "Iconic landscapes, remarkable wildlife, and the timeless romance of the bush.",
             },
             {
-              icon: "pi-sun",
+              image: "safari",
+              alt: "Warm sunset over a safari game drive",
               title: "Just the two of you",
               text: "Quiet corners, golden sunsets, and unforgettable moments to share.",
             },
             {
-              icon: "pi-users",
+              image: "elephants-golden",
+              alt: "An elephant and calf together in the evening light",
               title: "Together, in the wild",
               text: "Bring your favourite people. Make the kind of memories that become family stories.",
             },
           ].map((item) => (
             <Link
               to={`/contact?interest=${encodeURIComponent(item.title)}`}
-              className="style-card"
+              className="style-card photographic-style"
               key={item.title}
             >
-              <i className={`pi ${item.icon}`} />
+              <img
+                className="style-photo"
+                src={`/images/${item.image}.jpg`}
+                alt={item.alt}
+                loading="lazy"
+                decoding="async"
+              />
               <h3>{item.title}</h3>
               <p>{item.text}</p>
               <span className="text-link">Make it yours ↗</span>
@@ -185,7 +251,14 @@ export function HomePage() {
           ))}
         </div>
       </section>
-      <section className="quote-section">
+      <section className="quote-section photographic-quote">
+        <img
+          className="cinematic-backdrop"
+          src="/images/namib-dunes.jpg"
+          alt=""
+          loading="lazy"
+          decoding="async"
+        />
         <span className="star">✳</span>
         <blockquote>
           A quieter mind. A wider horizon. A collection of moments to carry with

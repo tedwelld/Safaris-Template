@@ -5,7 +5,7 @@ const trips = [
     length: "5 days",
     region: "Kenya",
     price: "$1,980",
-    image: "safari",
+    image: "giraffe-savannah",
     description:
       "Sunrise game drives, intimate tented camps, and dinner beneath a sky full of stars.",
   },
@@ -23,7 +23,7 @@ const trips = [
     length: "6 days",
     region: "Kenya & Tanzania",
     price: "$2,150",
-    image: "wildlife",
+    image: "elephants-golden",
     description:
       "A gentler pace, shared discoveries, and little moments that become your biggest memories.",
   },
@@ -45,7 +45,13 @@ export function SafarisPage() {
   );
   return (
     <div className="route-page">
-      <section className="page-intro">
+      <section className="page-intro photographic-intro ">
+        <img
+          className="cinematic-backdrop"
+          src="/images/plains.jpg"
+          alt="Zebras crossing the golden savannah"
+          fetchPriority="high"
+        />
         <span className="eyebrow">THE SAFARI COLLECTION</span>
         <h1>
           Find your kind

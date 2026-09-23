@@ -34,7 +34,13 @@ const faqs = [
 export function FaqPage() {
   return (
     <div className="route-page">
-      <section className="page-intro">
+      <section className="page-intro photographic-intro lion-intro">
+        <img
+          className="cinematic-backdrop"
+          src="/images/lion-grasslands.jpg"
+          alt="A lion resting in the grasslands"
+          fetchPriority="high"
+        />
         <span className="eyebrow">
           A LITTLE KNOWLEDGE, A LOT OF POSSIBILITY
         </span>
