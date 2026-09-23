@@ -1,75 +1,42 @@
-# React + TypeScript + Vite
+# Wildtrack Safaris
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A React, TypeScript, and Vite safari website inspired by Micato's editorial travel presentation, with original Wildtrack branding and copy.
 
-Currently, two official plugins are available:
+## Local development
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+Run `npm install` and `npm run dev`. Use `npm run build` for production and `npm run lint` for lint checks. Production hosting must rewrite application routes to `index.html`.
 
-## React Compiler
+## Pages and interactions
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- Home: full-width photography, destination links, and travel styles.
+- Safaris: destination filters stored in the URL; enquiry links preserve the selected trip.
+- About: the Wildtrack approach and travel philosophy.
+- Booking: trip enquiry, preferred month, group size, and optional Bokun host.
+- Contact: enquiry form, email, and optional WhatsApp.
+- FAQs: keyboard-accessible expandable answers.
 
-## Expanding the ESLint configuration
+All pages have responsive navigation, visible focus styles, and reduced-motion support.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Configuration and integration status
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+Copy `.env.example` to `.env.local` and supply your own public contact details. Restart Vite after changing environment variables. Never place private credentials in VITE variables.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+`VITE_API_BASE_URL` points to the enquiry backend, defaulting to `http://localhost:3001`. Forms POST name, email, tripInterest, and message to `/api/lead`. They handle failed requests without discarding the guest's input and provide an email fallback. Booking dates and group size are included in message.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+The supplied `server.js` is a demonstration backend: leads are logged, not stored or delivered. Run it locally with `npm run server`. Connect a real lead service before launch. The PayPal endpoint returns mock orders; the redesigned guest flow therefore requests a quote and does not expose that mock checkout.
 
-```
+`VITE_BOKUN_WIDGET_URL` retains the existing optional script/host integration. Leave it blank until you have the provider's actual embed script and any required widget identifiers. A real widget needs verification against your Bokun account.
 
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
+Trip prices are sample starting prices, not live quotes. Replace them with approved rates before launch. Google Fonts provides Cormorant Garamond and DM Sans; system fonts serve as fallbacks.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Photography
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+Images are stored locally in `public/images` and sourced from Unsplash:
 
-```
+- Safari sunset: https://images.unsplash.com/photo-1516426122078-c23e76319801
+- Zebras on the plains (Sutirta Budiman): https://unsplash.com/photos/Jgiv1rSIpVM
+- Elephant: https://images.unsplash.com/photo-1549366021-9f761d450615
+
+## Validation
+
+Production build and ESLint. Browser checks cover all six pages at desktop, tablet, and mobile widths, mobile navigation, destination filters, selected-trip handoff, FAQ expansion, and enquiry success/error responses with a mocked API. Live payment, email delivery, and Bokun availability are not verified.

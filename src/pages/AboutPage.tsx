@@ -1,64 +1,75 @@
-const highlights = [
-  'Boutique safari design tailored to premium travel brands',
-  'Local expertise and conservation-first travel planning',
-  'Seamless end-to-end guest communication from enquiry to arrival',
-]
-
+import { Link } from "react-router-dom";
 export function AboutPage() {
   return (
     <div className="route-page">
-      <section className="card-section narrow">
-        <div className="section-header" data-reveal>
-          <span className="eyebrow">About us</span>
-          <h2>Designed for unforgettable journeys across Africa.</h2>
+      <section className="page-intro">
+        <span className="eyebrow">THE WILDTRACK WAY</span>
+        <h1>
+          A love of Africa.
+          <br />
+          <em>A sense of belonging.</em>
+        </h1>
+        <p>
+          We travel for connection. To the land, to its people, and to the
+          feeling of being somewhere truly extraordinary.
+        </p>
+      </section>
+      <section className="editorial-section">
+        <div className="editorial-image">
+          <img src="/images/plains.jpg" alt="An expansive African wilderness" />
+          <span>A DIFFERENT PERSPECTIVE</span>
         </div>
-
-        <div className="two-column-layout">
-          <div className="info-card" data-reveal>
-            <p>
-              Wildtrack Safaris is built for boutique operators who want to deliver elevated experiences,
-              effortless booking journeys, and highly personalized guest service from the first click to the
-              final game drive.
-            </p>
-            <p>
-              Our template is shaped around the realities of safari travel: flexibility, trust, premium
-              presentation, and clear communication. It gives your brand a polished online presence while
-              keeping the operational flow simple for travel teams.
-            </p>
-          </div>
-
-          <div className="info-card accent-card" data-reveal>
-            <h3>Why this works</h3>
-            <ul>
-              {highlights.map((item) => (
-                <li key={item}>{item}</li>
-              ))}
-            </ul>
-          </div>
+        <div className="editorial-copy">
+          <span className="eyebrow">PERSONAL BY NATURE</span>
+          <h2>
+            A journey with
+            <br />
+            <em>you at its heart.</em>
+          </h2>
+          <p>
+            Your idea of a perfect safari is unique. Perhaps it’s the excitement
+            of your first game drive, the quiet of a remote camp, or watching
+            your children discover a whole new world.
+          </p>
+          <p>
+            We start by listening. Then we bring together thoughtful routes,
+            welcoming places to stay, and time to enjoy the moments that cannot
+            be scheduled.
+          </p>
+          <Link className="text-link" to="/contact">
+            Tell us what moves you ↗
+          </Link>
         </div>
       </section>
-
-      <section className="card-section">
-        <div className="section-header" data-reveal>
-          <span className="eyebrow">Our approach</span>
-          <h2>Thoughtful planning, warm hospitality, and expert guidance.</h2>
-        </div>
-
-        <div className="three-column-layout">
-          <article className="mini-card" data-reveal>
-            <h3>01. Research</h3>
-            <p>We match each guest to the right route, pace, and experiences based on travel goals.</p>
-          </article>
-          <article className="mini-card" data-reveal>
-            <h3>02. Design</h3>
-            <p>Every itinerary is crafted to feel immersive, clear, and tailored to premium expectations.</p>
-          </article>
-          <article className="mini-card" data-reveal>
-            <h3>03. Support</h3>
-            <p>Bookings, confirmations, and follow-ups stay connected through proactive communication.</p>
-          </article>
+      <section className="section-wrap travel-styles">
+        <span className="eyebrow">THE LITTLE THINGS ARE THE BIG THINGS</span>
+        <h2>
+          Thoughtfully considered.
+          <br />
+          <em>Beautifully experienced.</em>
+        </h2>
+        <div className="style-grid">
+          {[
+            {
+              title: "01. We listen",
+              text: "Your interests, your pace, your travel companions. We begin with what makes a journey meaningful to you.",
+            },
+            {
+              title: "02. We make it personal",
+              text: "The right landscapes, a welcoming camp, and time for discovery. Each detail earns its place in your itinerary.",
+            },
+            {
+              title: "03. We stay connected",
+              text: "Clear guidance before you leave and a familiar point of contact as you plan your adventure.",
+            },
+          ].map((item) => (
+            <article className="style-card" key={item.title}>
+              <h3>{item.title}</h3>
+              <p>{item.text}</p>
+            </article>
+          ))}
         </div>
       </section>
     </div>
-  )
+  );
 }

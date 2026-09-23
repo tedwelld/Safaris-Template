@@ -1,40 +1,70 @@
+import { Link } from "react-router-dom";
 const faqs = [
   {
-    question: 'Can I connect custom booking flows to Bokun?',
-    answer: 'Yes. This template is designed to support Bokun widget embedding, package booking links, and a structured enquiry flow for safari operators.',
+    question: "When is the best time to go on safari?",
+    answer:
+      "It depends on your destination and what you hope to see. Dry seasons can make wildlife easier to spot around water sources, while greener months bring different landscapes and quieter camps. Share your preferred dates and we’ll help you explore the options.",
   },
   {
-    question: 'Does the template support email communications?',
-    answer: 'Yes. The design includes email automation touchpoints such as booking confirmations, reminders, and follow-up messages for guests.',
+    question: "Can you tailor a journey around us?",
+    answer:
+      "Absolutely. Our collection is a starting point. We can discuss the route, pace, accommodation, and experiences that suit your interests and your group.",
   },
   {
-    question: 'Can I use WhatsApp for conversion and support?',
-    answer: 'Absolutely. The site includes quick links and message flows to help convert warm leads directly into safari conversations.',
+    question: "Is a safari suitable for families?",
+    answer:
+      "Many safaris are wonderful for families. Age policies vary by lodge and activity, so tell us your children’s ages when you enquire. We’ll help you consider suitable stays and a comfortable pace.",
   },
   {
-    question: 'Can I accept deposits and full payments online?',
-    answer: 'Yes. The booking page is structured for PayPal checkout, secure payment steps, and follow-up confirmation messaging after payment success.',
+    question: "What is included in the price?",
+    answer:
+      "Inclusions depend on your itinerary. Your personalised quote will set out accommodation, meals, activities, transfers, and any exclusions before you confirm.",
   },
-]
-
+  {
+    question: "How do I begin planning?",
+    answer:
+      "Send us your preferred destination, approximate dates, group size, and any ideas you have. We’ll discuss the possibilities and help shape your itinerary before you make a booking.",
+  },
+  {
+    question: "What should I pack?",
+    answer:
+      "Think comfortable layers, neutral colours, sturdy shoes, sun protection, and a camera or binoculars. Your final packing list will depend on the season, activities, and baggage limits on your itinerary.",
+  },
+];
 export function FaqPage() {
   return (
     <div className="route-page">
-      <section className="card-section narrow">
-        <div className="section-header" data-reveal>
-          <span className="eyebrow">FAQ</span>
-          <h2>Frequently asked questions.</h2>
-        </div>
-
-        <div className="faq-list">
-          {faqs.map((item, index) => (
-            <details key={item.question} className="faq-item" open data-reveal style={{ transitionDelay: `${index * 80}ms` }}>
-              <summary>{item.question}</summary>
-              <p>{item.answer}</p>
-            </details>
-          ))}
+      <section className="page-intro">
+        <span className="eyebrow">
+          A LITTLE KNOWLEDGE, A LOT OF POSSIBILITY
+        </span>
+        <h1>
+          Before the
+          <br />
+          <em>adventure begins.</em>
+        </h1>
+        <p>
+          A few answers to get you dreaming. For everything else, we’re just a
+          conversation away.
+        </p>
+      </section>
+      <section className="faq-section">
+        {faqs.map((item) => (
+          <details className="faq-item" key={item.question}>
+            <summary>
+              {item.question}
+              <span aria-hidden="true">+</span>
+            </summary>
+            <p>{item.answer}</p>
+          </details>
+        ))}
+        <div className="faq-help">
+          <p>Have something else on your mind?</p>
+          <Link className="text-link" to="/contact">
+            Ask a safari specialist ↗
+          </Link>
         </div>
       </section>
     </div>
-  )
+  );
 }

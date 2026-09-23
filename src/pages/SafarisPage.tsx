@@ -1,60 +1,118 @@
-const safariTrips = [
+import { Link, useSearchParams } from "react-router-dom";
+const trips = [
   {
-    title: 'Savannah Signature',
-    length: '5 days',
-    region: 'Kenya',
-    price: '$1,980',
-    description: 'Luxury tented camps, sunrise game drives, and private bush dinners under the stars.',
+    title: "Savannah Signature",
+    length: "5 days",
+    region: "Kenya",
+    price: "$1,980",
+    image: "safari",
+    description:
+      "Sunrise game drives, intimate tented camps, and dinner beneath a sky full of stars.",
   },
   {
-    title: 'Great Migration',
-    length: '7 days',
-    region: 'Tanzania',
-    price: '$2,640',
-    description: 'Follow the herds across the plains and experience some of the most dramatic wildlife moments on earth.',
+    title: "The Great Migration",
+    length: "7 days",
+    region: "Tanzania",
+    price: "$2,640",
+    image: "plains",
+    description:
+      "Wide-open plains and the thrill of following the herds, with time to take it all in.",
   },
   {
-    title: 'Family Adventure',
-    length: '6 days',
-    region: 'Kenya & Tanzania',
-    price: '$2,150',
-    description: 'Comfortable, easy-paced journeys with expert guides and child-friendly experiences.',
+    title: "A Family Adventure",
+    length: "6 days",
+    region: "Kenya & Tanzania",
+    price: "$2,150",
+    image: "wildlife",
+    description:
+      "A gentler pace, shared discoveries, and little moments that become your biggest memories.",
   },
   {
-    title: 'Luxury Private Escape',
-    length: '8 days',
-    region: 'Botswana',
-    price: '$3,480',
-    description: 'Exclusive safari lodges, fly-in access, and tailored routes for guests seeking privacy and style.',
+    title: "The Private Wilderness",
+    length: "8 days",
+    region: "Botswana",
+    price: "$3,480",
+    image: "wildlife",
+    description:
+      "Remote landscapes, intimate lodges, and an escape shaped around your own sense of adventure.",
   },
-]
-
+];
 export function SafarisPage() {
+  const [params, setParams] = useSearchParams();
+  const region = params.get("region") || "All destinations";
+  const filtered = trips.filter(
+    (trip) => region === "All destinations" || trip.region.includes(region),
+  );
   return (
     <div className="route-page">
-      <section className="card-section">
-        <div className="section-header" data-reveal>
-          <span className="eyebrow">Our safaris</span>
-          <h2>Choose the journey that feels right for you.</h2>
+      <section className="page-intro">
+        <span className="eyebrow">THE SAFARI COLLECTION</span>
+        <h1>
+          Find your kind
+          <br />
+          of <em>extraordinary.</em>
+        </h1>
+        <p>
+          Consider these a starting point. Every journey can be shaped around
+          the places, people, and moments that matter to you.
+        </p>
+      </section>
+      <section className="section-wrap">
+        <div className="filter-bar" aria-label="Filter by destination">
+          {["All destinations", "Kenya", "Tanzania", "Botswana"].map((item) => (
+            <button
+              key={item}
+              className={region === item ? "selected" : ""}
+              aria-pressed={region === item}
+              onClick={() =>
+                setParams(item === "All destinations" ? {} : { region: item })
+              }
+            >
+              {item}
+            </button>
+          ))}
         </div>
-
         <div className="safari-grid">
-          {safariTrips.map((trip, index) => (
-            <article className="safari-card" key={trip.title} data-reveal style={{ transitionDelay: `${index * 80}ms` }}>
-              <div className="safari-meta">
-                <span>{trip.length}</span>
-                <span>{trip.region}</span>
-              </div>
-              <h3>{trip.title}</h3>
-              <p>{trip.description}</p>
-              <div className="safari-footer">
-                <strong>{trip.price}</strong>
-                <a href="/booking">Book now</a>
+          {filtered.map((trip) => (
+            <article className="safari-card" key={trip.title}>
+              <img
+                src={`/images/${trip.image}.jpg`}
+                alt={`Wildlife and landscapes of ${trip.region}`}
+                loading="lazy"
+              />
+              <div className="safari-card-body">
+                <span className="eyebrow">
+                  {trip.region} · {trip.length}
+                </span>
+                <h2>{trip.title}</h2>
+                <p>{trip.description}</p>
+                <div className="safari-footer">
+                  <span>
+                    From <strong>{trip.price}</strong>
+                    <small>per person · indicative price</small>
+                  </span>
+                  <Link
+                    className="text-link"
+                    to={`/booking?trip=${encodeURIComponent(trip.title)}`}
+                  >
+                    Enquire <span>↗</span>
+                  </Link>
+                </div>
               </div>
             </article>
           ))}
         </div>
+        {!filtered.length && (
+          <p>
+            No journeys found. Choose another destination to explore the
+            collection.
+          </p>
+        )}
+        <p className="collection-note">
+          Every safari is personal. Final pricing depends on your dates,
+          accommodation, and group size.
+        </p>
       </section>
     </div>
-  )
+  );
 }
