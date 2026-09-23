@@ -1,0 +1,55 @@
+@import 'primeicons/primeicons.css';
+
+:root {
+  font-family: Inter, 'Segoe UI', sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  color: #1e2b27;
+  background: #f3efe9;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color-scheme: light;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at top, rgba(209, 175, 118, 0.2), transparent 25%),
+    #f3efe9;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+button,
+a {
+  font: inherit;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+h1,
+h2,
+h3,
+p,
+ul,
+ol,
+li {
+  margin-top: 0;
+}
