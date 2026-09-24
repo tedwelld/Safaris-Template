@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, NavLink, Route, Routes, useLocation } from "react-router-dom";
 import "./App.css";
+import { FloatingNavigation } from "./components/FloatingNavigation";
 import { ClientAccess } from "./components/ClientAccess";
 import { TermsPage } from "./pages/TermsPage";
 import { AboutPage } from "./pages/AboutPage";
@@ -19,14 +20,6 @@ const navItems = [
 ];
 import { supportEmail, poweredByWhatsappUrl } from "./config";
 
-const bottomNavItems = [
-  { label: "Home", to: "/", icon: "pi-home" },
-  { label: "Activities", to: "/safaris", icon: "pi-compass" },
-  { label: "Plan", to: "/booking", icon: "pi-calendar" },
-  { label: "About", to: "/about", icon: "pi-users" },
-  { label: "Contact", to: "/contact", icon: "pi-envelope" },
-  { label: "FAQ", to: "/faq", icon: "pi-question-circle" },
-];
 
 function Brand() {
   return (
@@ -185,20 +178,7 @@ function App() {
           )}
         </div>
       </footer>
-      <nav className="bottom-nav" aria-label="Quick navigation">
-        {bottomNavItems.map((item) => (
-          <NavLink
-            key={item.to}
-            to={item.to}
-            end={item.to === "/"}
-            className="bottom-nav-link"
-            onClick={() => setMenuOpen(false)}
-          >
-            <i className={`pi ${item.icon}`} aria-hidden="true" />
-            <span>{item.label}</span>
-          </NavLink>
-        ))}
-      </nav>
+      <FloatingNavigation key={location.key} />
       <ClientAccess />
     </div>
   );
