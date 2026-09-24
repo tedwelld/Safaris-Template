@@ -11,11 +11,11 @@ import { HomePage } from "./pages/HomePage";
 import { SafarisPage } from "./pages/SafarisPage";
 
 const navItems = [
-  { label: "Home", to: "/" },
-  { label: "Activities", to: "/safaris" },
-  { label: "The Dove Journeys way", to: "/about" },
-  { label: "Safari essentials", to: "/faq" },
-  { label: "Get in touch", to: "/contact" },
+  { label: "Home", to: "/", icon: "pi-home" },
+  { label: "Activities", to: "/safaris", icon: "pi-compass" },
+  { label: "The Dove Journeys way", to: "/about", icon: "pi-users" },
+  { label: "Safari essentials", to: "/faq", icon: "pi-question-circle" },
+  { label: "Get in touch", to: "/contact", icon: "pi-envelope" },
 ];
 import { supportEmail, poweredByWhatsappUrl } from "./config";
 
@@ -66,7 +66,7 @@ function App() {
       <div className="utility-bar">
         <span>EXTRAORDINARY PLACES. PERSONAL JOURNEYS.</span>
         <Link to="/contact">
-          Talk to a safari specialist <i className="pi pi-arrow-up-right" />
+          Talk to a safari specialist <i className="pi pi-arrow-up-right" aria-hidden="true" />
         </Link>
       </div>
       <header className="topbar">
@@ -74,12 +74,13 @@ function App() {
         <nav className="nav" aria-label="Main navigation">
           {navItems.map((item) => (
             <NavLink key={item.to} to={item.to} end={item.to === "/"} className="nav-link">
+              <i className={`pi ${item.icon}`} aria-hidden="true" />
               {item.label}
             </NavLink>
           ))}
         </nav>
         <Link className="primary-btn desktop-cta" to="/booking">
-          Plan your safari <span>↗</span>
+          Plan your safari <i className="pi pi-arrow-up-right" aria-hidden="true" />
         </Link>
         <button
           className="menu-toggle"
@@ -88,7 +89,7 @@ function App() {
           aria-controls="mobile-navigation"
           onClick={() => setMenuOpen(!menuOpen)}
         >
-          <i className={`pi ${menuOpen ? "pi-times" : "pi-bars"}`} />
+          <i className={`pi ${menuOpen ? "pi-times" : "pi-bars"}`} aria-hidden="true" />
         </button>
       </header>
       {menuOpen && (
@@ -97,7 +98,7 @@ function App() {
           className="mobile-menu"
           aria-label="Mobile navigation"
         >
-          {[...navItems, { label: "Plan your safari", to: "/booking" }].map(
+          {[...navItems, { label: "Plan your safari", to: "/booking", icon: "pi-calendar" }].map(
             (item) => (
               <NavLink
                 key={item.to}
@@ -105,8 +106,8 @@ function App() {
                 end={item.to === "/"}
                 onClick={() => setMenuOpen(false)}
               >
-                {item.label}
-                <span>↗</span>
+                <span className="nav-item-label"><i className={`pi ${item.icon}`} aria-hidden="true" />{item.label}</span>
+                <i className="pi pi-arrow-up-right" aria-hidden="true" />
               </NavLink>
             ),
           )}
@@ -129,7 +130,7 @@ function App() {
                 <span className="eyebrow">A little off the beaten track</span>
                 <h1>Let’s find your way back.</h1>
                 <Link className="primary-btn" to="/">
-                  Return home ↗
+                  Return home <i className="pi pi-arrow-up-right" aria-hidden="true" />
                 </Link>
               </section>
             }
@@ -155,7 +156,7 @@ function App() {
           </p>
         </div>
         <Link className="light-btn" to="/contact">
-          Let’s dream it up <span>↗</span>
+          Let’s dream it up <i className="pi pi-arrow-up-right" aria-hidden="true" />
         </Link>
       </section>
       <footer className="footer">
@@ -177,8 +178,8 @@ function App() {
             <h3>Let’s connect</h3>
             {supportEmail && <Link to="/contact#request-form">{supportEmail}</Link>}
             <Link to="/terms">Terms and conditions</Link>
-            <Link to="/contact">Speak to a specialist ↗</Link>
-            <Link to="/booking">Plan your journey ↗</Link>
+            <Link to="/contact">Speak to a specialist <i className="pi pi-arrow-up-right" aria-hidden="true" /></Link>
+            <Link to="/booking">Plan your journey <i className="pi pi-arrow-up-right" aria-hidden="true" /></Link>
           </div>
         </div>
         <div className="footer-bottom">

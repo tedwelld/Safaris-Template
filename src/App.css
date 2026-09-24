@@ -1419,3 +1419,12 @@ html { scroll-padding-top: calc(var(--header-height) + 16px); }
   overscroll-behavior: contain;
   box-shadow: 0 12px 20px #0002;
 }
+
+/* Use the shared PrimeIcons font for navigation and decorative actions. */
+.nav-link, .nav-item-label { display: inline-flex; align-items: center; gap: 8px; }
+.nav-link { white-space: nowrap; }
+.nav { gap: clamp(14px, 1.6vw, 30px); }
+.primary-btn > .pi, .light-btn > .pi, .text-link > .pi { font-size: 1em; flex-shrink: 0; }
+.destination-card h3 > .pi { font-size: 23px; }
+.hero-bottom a > .pi { margin-left: 20px; }
+.star > .pi { font-size: inherit; }

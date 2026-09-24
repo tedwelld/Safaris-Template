@@ -55,7 +55,7 @@ export function ContactPage() {
                 target="_blank"
                 rel="noreferrer"
               >
-                Chat on WhatsApp ↗
+                Chat on WhatsApp <i className="pi pi-arrow-up-right" aria-hidden="true" />
               </a>
             </p>
           )}

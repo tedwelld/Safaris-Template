@@ -59,7 +59,7 @@ export function FaqPage() {
           <details className="faq-item" key={item.question}>
             <summary>
               {item.question}
-              <span aria-hidden="true">+</span>
+              <span aria-hidden="true"><i className="pi pi-plus" aria-hidden="true" /></span>
             </summary>
             <p>{item.answer}</p>
           </details>
@@ -67,7 +67,7 @@ export function FaqPage() {
         <div className="faq-help">
           <p>Have something else on your mind?</p>
           <Link className="text-link" to="/contact">
-            Ask a safari specialist ↗
+            Ask a safari specialist <i className="pi pi-arrow-up-right" aria-hidden="true" />
           </Link>
         </div>
       </section>

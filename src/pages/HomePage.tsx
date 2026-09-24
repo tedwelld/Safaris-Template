@@ -26,23 +26,23 @@ export function HomePage() {
             Discover the wild, and a little of yourself.
           </p>
           <Link className="light-btn" to="/safaris">
-            Find your extraordinary <span>↗</span>
+            Find your extraordinary <i className="pi pi-arrow-up-right" aria-hidden="true" />
           </Link>
         </div>
         <div className="hero-bottom">
           <span>
-            <i className="pi pi-map-marker" /> THE CALL OF THE AFRICAN WILD
+            <i className="pi pi-map-marker" aria-hidden="true" /> THE CALL OF THE AFRICAN WILD
           </span>
           <a href="#discover">
-            SCROLL TO DISCOVER <span>↓</span>
+            SCROLL TO DISCOVER <i className="pi pi-arrow-down" aria-hidden="true" />
           </a>
         </div>
       </section>
       <div className="promise-strip">
         <span>Personally crafted journeys</span>
-        <span className="star">✳</span>
+        <span className="star"><i className="pi pi-sparkles" aria-hidden="true" /></span>
         <span>Remarkable places to stay</span>
-        <span className="star">✳</span>
+        <span className="star"><i className="pi pi-sparkles" aria-hidden="true" /></span>
         <span>Local knowledge. Lasting memories.</span>
       </div>
       <section id="discover" className="intro-section">
@@ -58,10 +58,10 @@ export function HomePage() {
           for. We bring them together in a safari that feels entirely your own.
         </p>
         <Link className="text-link" to="/about">
-          Discover the Dove Journeys way <span>↗</span>
+          Discover the Dove Journeys way <i className="pi pi-arrow-up-right" aria-hidden="true" />
         </Link>
       </section>
-      <section className="section-wrap local-activities"><span className="eyebrow">VICTORIA FALLS & LIVINGSTONE</span><h2>Two sides of the Zambezi.<br /><em>One unforgettable journey.</em></h2><p>Discover guided Falls walks, sunset cruises, scenic flights, rafting, wildlife drives and cultural visits. Explore Zimbabwe’s Victoria Falls and Livingstone on the Zambian side, then choose the experiences you want us to arrange.</p><Link className="primary-btn" to="/safaris">Explore our activities ↗</Link></section>
+      <section className="section-wrap local-activities"><span className="eyebrow">VICTORIA FALLS & LIVINGSTONE</span><h2>Two sides of the Zambezi.<br /><em>One unforgettable journey.</em></h2><p>Discover guided Falls walks, sunset cruises, scenic flights, rafting, wildlife drives and cultural visits. Explore Zimbabwe’s Victoria Falls and Livingstone on the Zambian side, then choose the experiences you want us to arrange.</p><Link className="primary-btn" to="/safaris">Explore our activities <i className="pi pi-arrow-up-right" aria-hidden="true" /></Link></section>
       <section
         className="photo-story section-wrap"
         aria-labelledby="photo-story-heading"
@@ -130,7 +130,7 @@ export function HomePage() {
             </h2>
           </div>
           <Link className="text-link" to="/safaris">
-            Explore all activities <span>↗</span>
+            Explore all activities <i className="pi pi-arrow-up-right" aria-hidden="true" />
           </Link>
         </div>
         <div className="destination-grid">
@@ -168,7 +168,7 @@ export function HomePage() {
                 <span className="eyebrow">{item.tag}</span>
                 <h3>
                   {item.name}
-                  <span>↗</span>
+                  <i className="pi pi-arrow-up-right" aria-hidden="true" />
                 </h3>
               </div>
             </Link>
@@ -201,7 +201,7 @@ export function HomePage() {
             details around you, so you can simply be there.
           </p>
           <Link className="text-link" to="/about">
-            A more personal way to travel <span>↗</span>
+            A more personal way to travel <i className="pi pi-arrow-up-right" aria-hidden="true" />
           </Link>
         </div>
       </section>
@@ -247,7 +247,7 @@ export function HomePage() {
               />
               <h3>{item.title}</h3>
               <p>{item.text}</p>
-              <span className="text-link">Make it yours ↗</span>
+              <span className="text-link">Make it yours <i className="pi pi-arrow-up-right" aria-hidden="true" /></span>
             </Link>
           ))}
         </div>
@@ -260,7 +260,7 @@ export function HomePage() {
           loading="lazy"
           decoding="async"
         />
-        <span className="star">✳</span>
+        <span className="star"><i className="pi pi-sparkles" aria-hidden="true" /></span>
         <blockquote>
           A quieter mind. A wider horizon. A collection of moments to carry with
           you, long after the journey home.

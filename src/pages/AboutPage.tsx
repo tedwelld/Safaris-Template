@@ -46,7 +46,7 @@ export function AboutPage() {
             be scheduled.
           </p>
           <Link className="text-link" to="/contact">
-            Tell us what moves you ↗
+            Tell us what moves you <i className="pi pi-arrow-up-right" aria-hidden="true" />
           </Link>
         </div>
       </section>

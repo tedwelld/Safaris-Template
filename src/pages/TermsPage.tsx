@@ -7,6 +7,6 @@ export function TermsPage() {
     <h2>Activity suitability and conditions</h2><p>Activities depend on operator availability, weather, water levels and safety decisions. Tell the team about children’s ages and relevant accessibility or participation needs so they can check suitability. Cross-border arrangements and required travel documents must be confirmed for your itinerary.</p>
     <h2>Email and WhatsApp</h2><p>The email form prepares a message in your own email application. You must press Send there; preparing a message alone does not deliver it. WhatsApp opens an external service. Share only information needed for your request and avoid sending payment card details or identity documents in an initial enquiry.</p>
     <h2>Your choice</h2><p>You may accept or decline the first-visit notice. Your choice is stored in this browser and can be changed using “Review terms preference” in the footer. Declining does not prevent browsing or general enquiries. Booking requests ask you to acknowledge these request conditions separately; the final booking policies will accompany your quote.</p>
-    <Link className="text-link" to="/contact">Ask about your arrangements ↗</Link>
+    <Link className="text-link" to="/contact">Ask about your arrangements <i className="pi pi-arrow-up-right" aria-hidden="true" /></Link>
   </section></div>;
 }
