@@ -1,7 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Link, NavLink, Route, Routes, useLocation } from "react-router-dom";
 import "./App.css";
-import { FloatingNavigation } from "./components/FloatingNavigation";
 import { ClientAccess } from "./components/ClientAccess";
 import { TermsPage } from "./pages/TermsPage";
 import { AboutPage } from "./pages/AboutPage";
@@ -31,6 +30,19 @@ function Brand() {
 function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const location = useLocation();
+  const fixedHeader = useRef<HTMLDivElement>(null);
+  useLayoutEffect(() => {
+    const header = fixedHeader.current;
+    if (!header) return;
+    const updateHeight = () => document.documentElement.style.setProperty('--header-height', `${header.getBoundingClientRect().height}px`);
+    updateHeight();
+    const observer = new ResizeObserver(updateHeight);
+    observer.observe(header);
+    return () => {
+      observer.disconnect();
+      document.documentElement.style.removeProperty('--header-height');
+    };
+  }, []);
   useEffect(() => {
     if (location.hash) {
       document.getElementById(location.hash.slice(1))?.scrollIntoView();
@@ -50,6 +62,7 @@ function App() {
       <a href="#main" className="skip-link">
         Skip to content
       </a>
+      <div className="fixed-header" ref={fixedHeader}>
       <div className="utility-bar">
         <span>EXTRAORDINARY PLACES. PERSONAL JOURNEYS.</span>
         <Link to="/contact">
@@ -99,6 +112,7 @@ function App() {
           )}
         </nav>
       )}
+      </div>
       <main id="main">
         <Routes>
           <Route path="/" element={<HomePage />} />
@@ -178,7 +192,6 @@ function App() {
           )}
         </div>
       </footer>
-      <FloatingNavigation key={location.key} />
       <ClientAccess />
     </div>
   );

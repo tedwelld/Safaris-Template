@@ -1405,56 +1405,17 @@
   .topbar .brand-logo { filter: none; }
 }
 
-/* Quick page access replaces the mobile bottom bar; contact actions stay on the right. */
-.floating-navigation { display: none; }
-@media (max-width: 1200px), (max-width: 1400px) and (pointer: coarse) {
-  .page-shell { padding-bottom: calc(90px + var(--terms-height) + env(safe-area-inset-bottom, 0px)); }
-  html { scroll-padding-bottom: 100px; }
-  .floating-navigation {
-    display: block;
-    position: fixed;
-    z-index: 62;
-    left: max(16px, env(safe-area-inset-left, 0px));
-    bottom: calc(20px + var(--terms-height) + env(safe-area-inset-bottom, 0px));
-  }
-  .navigation-fab {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    min-height: 54px;
-    padding: 12px 20px;
-    border-radius: 30px;
-    border: 2px solid #fff0cf;
-    background: #414932;
-    color: #fff0cf;
-    box-shadow: 0 4px 18px #0004;
-    font-size: 15px;
-    font-weight: 600;
-  }
-  .navigation-fab .pi { font-size: 20px; }
-  .floating-pages {
-    position: absolute;
-    bottom: calc(100% + 12px);
-    left: 0;
-    width: min(290px, calc(100vw - 92px));
-    max-height: calc(100dvh - var(--terms-height) - 110px - env(safe-area-inset-bottom, 0px));
-    overflow-y: auto;
-    overscroll-behavior: contain;
-    background: #faf9f5;
-    color: #34392d;
-    border: 1px solid #a19472;
-    border-radius: 18px;
-    padding: 12px;
-    box-shadow: 0 8px 30px #0004;
-  }
-  .floating-pages-title { display: block; padding: 6px 10px 10px; font-size: 12px; letter-spacing: 1px; }
-  .floating-pages a { display: flex; align-items: center; gap: 12px; min-height: 46px; padding: 10px; border-radius: 8px; font-size: 15px; line-height: 1.4; }
-  .floating-pages a:hover, .floating-pages a.active { background: #e7e4d5; color: #34392d; }
-  .floating-pages a.active { font-weight: 700; }
-  .floating-pages a:focus-visible { outline-offset: -2px; }
-}
-@media (prefers-color-scheme: dark) {
-  .floating-pages { background: #22271f; color: #eeeadd; }
-  .floating-pages a:hover, .floating-pages a.active { background: #414932; color: #fff0cf; }
+/* Keep the complete header visible and reserve its measured height in the page. */
+:root { --header-height: 139px; }
+.fixed-header { position: fixed; inset: 0 0 auto; z-index: 70; }
+.page-shell { padding-top: var(--header-height); }
+html { scroll-padding-top: calc(var(--header-height) + 16px); }
+.fixed-header .mobile-menu {
+  position: absolute;
+  top: 100%;
+  inset-inline: 0;
+  max-height: calc(100dvh - var(--header-height));
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  box-shadow: 0 12px 20px #0002;
 }
