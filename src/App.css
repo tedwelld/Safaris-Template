@@ -1351,9 +1351,6 @@
 }
 
 /* Both supplied logo panels share a stable display box across theme changes. */
-.brand picture {
-  display: block;
-}
 .brand-logo {
   width: 180px;
   height: 98px;
@@ -1472,3 +1469,9 @@
 .footer-bottom { gap: 12px 24px; flex-wrap: wrap; }
 .powered-by { text-decoration: underline; text-underline-offset: 4px; }
 .powered-by:hover { color: #f0d9a7; }
+
+/* Transparent artwork blends into each surface; keep contrast in the light header. */
+.topbar .brand-logo { filter: brightness(0.36) sepia(0.35); }
+@media (prefers-color-scheme: dark) {
+  .topbar .brand-logo { filter: none; }
+}

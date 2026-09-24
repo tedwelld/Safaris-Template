@@ -31,10 +31,7 @@ const bottomNavItems = [
 function Brand() {
   return (
     <Link to="/" className="brand" aria-label="Dove Journeys home">
-      <picture>
-        <source media="(prefers-color-scheme: dark)" srcSet="/images/dove-journeys-dark.png" />
-        <img className="brand-logo" src="/images/dove-journeys-light.png" alt="Dove Journeys — Your journey changes lives" width="1080" height="590" />
-      </picture>
+      <img className="brand-logo" src="/images/dove-journeys-transparent.png" alt="Dove Journeys — Your journey changes lives" width="1862" height="845" />
     </Link>
   );
 }

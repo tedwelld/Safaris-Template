@@ -50,7 +50,7 @@ Additional cinematic photography (Unsplash):
 
 ## Dove Journeys branding and theme
 
-The supplied logo is split at its horizontal divider into `public/images/dove-journeys-light.png` and `public/images/dove-journeys-dark.png`. The light panel retains the checkerboard present in the source JPEG. Header, footer, and browser icon follow the device's light/dark preference automatically, including a device's scheduled day/night theme. The site does not infer daylight from location or time.
+The supplied logo is split at its horizontal divider into `public/images/dove-journeys-light.png` and `public/images/dove-journeys-dark.png`. The original split panels are retained as source assets. The header and footer now use `public/images/dove-journeys-transparent.png` with real alpha transparency. The light header darkens the artwork using CSS for contrast; dark mode and the dark footer retain its cream colour. The site does not infer daylight from location or time.
 
 Set `VITE_EMAIL_SUPPORT`, `VITE_WHATSAPP_NUMBER` (international country code and number), and `VITE_WHATSAPP_MESSAGE` (plain text, not URL-encoded) in `.env.local`. Empty email/WhatsApp values hide those contact links. Restart development servers or rebuild production after changes.
 
@@ -71,3 +71,5 @@ The first-visit notice stores accept/decline under `dove-journeys-terms-v1`. Bot
 `.env.production` contains only public contact values and is included in Git so Vite production builds can render the WhatsApp, email and developer-credit links. `.env.example` is documentation and is not loaded by Vite; `.env.local` is ignored by Git and is not present in a Git-based deployment.
 
 Push `.env.production` and the `.gitignore` exception, then redeploy. Hosting environment variables override file values: if `VITE_EMAIL_SUPPORT`, `VITE_WHATSAPP_NUMBER` or `VITE_AXENTRA_WHATSAPP_NUMBER` already exist in Vercel, ensure they contain the correct nonempty values (or remove those overrides to use the file). Environment changes require a new build. Keep secrets and server-only settings out of `.env.production`.
+
+Logo background edit: built-in imagegen, background-extraction. Prompt: remove all black background including inside letters, preserve the dove, circle, mountains, river, layout and exact text “DOVE”, “JOURNEYS”, “YOUR JOURNEY CHANGES LIVES”; output a transparent PNG with cream-gold artwork, no new elements. Saved as `public/images/dove-journeys-transparent.png`.
