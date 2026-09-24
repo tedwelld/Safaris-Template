@@ -9,7 +9,7 @@ export function AboutPage() {
           alt="Elephants in warm evening light"
           fetchPriority="high"
         />
-        <span className="eyebrow">THE WILDTRACK WAY</span>
+        <span className="eyebrow">THE DOVE JOURNEYS WAY</span>
         <h1>
           A love of Africa.
           <br />
@@ -41,7 +41,7 @@ export function AboutPage() {
             your children discover a whole new world.
           </p>
           <p>
-            We start by listening. Then we bring together thoughtful routes,
+            We help you explore Victoria Falls in Zimbabwe and Livingstone on Zambia’s Zambezi side, from Falls walks and river cruises to wildlife, adventure and cultural activities. We start by listening, then bring together thoughtful routes,
             welcoming places to stay, and time to enjoy the moments that cannot
             be scheduled.
           </p>

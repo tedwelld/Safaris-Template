@@ -1,6 +1,6 @@
-# Wildtrack Safaris
+# Dove Journeys
 
-A React, TypeScript, and Vite safari website inspired by Micato's editorial travel presentation, with original Wildtrack branding and copy.
+A React, TypeScript, and Vite safari website inspired by Micato's editorial travel presentation, with original Dove Journeys branding and copy.
 
 ## Local development
 
@@ -9,9 +9,9 @@ Run `npm install` and `npm run dev`. Use `npm run build` for production and `npm
 ## Pages and interactions
 
 - Home: full-width photography, destination links, and travel styles.
-- Safaris: destination filters stored in the URL; enquiry links preserve the selected trip.
-- About: the Wildtrack approach and travel philosophy.
-- Booking: trip enquiry, preferred month, group size, and optional Bokun host.
+- Activities: Victoria Falls and Livingstone location filters stored in the URL; booking links preserve the selected activity.
+- About: the Dove Journeys approach and travel philosophy.
+- Booking: activity selections, exact dates, guest count, cost summary, email draft and optional Bokun host.
 - Contact: enquiry form, email, and optional WhatsApp.
 - FAQs: keyboard-accessible expandable answers.
 
@@ -21,13 +21,13 @@ All pages have responsive navigation, visible focus styles, and reduced-motion s
 
 Copy `.env.example` to `.env.local` and supply your own public contact details. Restart Vite after changing environment variables. Never place private credentials in VITE variables.
 
-`VITE_API_BASE_URL` points to the enquiry backend, defaulting to `http://localhost:3001`. Forms POST name, email, tripInterest, and message to `/api/lead`. They handle failed requests without discarding the guest's input and provide an email fallback. Booking dates and group size are included in message.
+`VITE_API_BASE_URL` points to the enquiry backend, defaulting to `http://localhost:3001`. The client request form now prepares a structured email draft; clients must send it from their email app. It does not use the demonstration lead endpoint.
 
 The supplied `server.js` is a demonstration backend: leads are logged, not stored or delivered. Run it locally with `npm run server`. Connect a real lead service before launch. The PayPal endpoint returns mock orders; the redesigned guest flow therefore requests a quote and does not expose that mock checkout.
 
 `VITE_BOKUN_WIDGET_URL` retains the existing optional script/host integration. Leave it blank until you have the provider's actual embed script and any required widget identifiers. A real widget needs verification against your Bokun account.
 
-Trip prices are sample starting prices, not live quotes. Replace them with approved rates before launch. Google Fonts provides Cormorant Garamond and DM Sans; system fonts serve as fallbacks.
+Activity rates remain unpublished until approved; the catalogue and calculator display “Quote required” for these activities. Google Fonts provides Cormorant Garamond and DM Sans; system fonts serve as fallbacks.
 
 ## Photography
 
@@ -47,3 +47,21 @@ Additional cinematic photography (Unsplash):
 - Maasai Mara giraffe, Carlos Torres: https://unsplash.com/photos/4rnGfF7XbYY
 - Namib dunes, Andreas Felske: https://unsplash.com/photos/nt66_G8DCBM
 - Resting lion, Steffen Wienberg: https://unsplash.com/photos/Dl4foQja1r8
+
+## Dove Journeys branding and theme
+
+The supplied logo is split at its horizontal divider into `public/images/dove-journeys-light.png` and `public/images/dove-journeys-dark.png`. The light panel retains the checkerboard present in the source JPEG. Header, footer, and browser icon follow the device's light/dark preference automatically, including a device's scheduled day/night theme. The site does not infer daylight from location or time.
+
+Set `VITE_EMAIL_SUPPORT`, `VITE_WHATSAPP_NUMBER` (international country code and number), and `VITE_WHATSAPP_MESSAGE` (plain text, not URL-encoded) in `.env.local`. Empty email/WhatsApp values hide those contact links. Restart development servers or rebuild production after changes.
+
+`ADMIN_EMAILS` is reserved for private, server-side email recipients, comma-separated. The demonstration backend does not send email yet; this setting does not enable delivery. Do not expose private admin recipients through `VITE_` variables. The backend loads `.env.local` and `.env` using Node's built-in environment loader (Node 22+); deployment environment values take precedence. Local environment files are ignored by Git, and `.env.example` documents the configuration without real contact details.
+
+## Activity requests and contact controls
+
+Public contact links use `VITE_EMAIL_SUPPORT` and `VITE_WHATSAPP_NUMBER` from `.env.local`. The floating email icon opens the request form; WhatsApp opens the configured business chat. The icons are the installed PrimeIcons WhatsApp brand glyph and envelope. Mobile buttons sit above the bottom navigation and any visible terms notice.
+
+`src/data/activities.ts` holds the Victoria Falls and Livingstone activity descriptions and per-person USD rates. Rates are deliberately `null` until approved; add numeric `priceUsd` values to enable numerical totals. Mixed priced/unpriced selections show a priced subtotal and require a final quote. The same data drives catalogue cards, selection, summaries and email drafts. Published rates are not a payment demand; availability, child rates and extra fees need confirmation.
+
+Activity context was checked against https://www.zambiatourism.com/activities/livingstone/, https://www.zambiatourism.com/activities/adventure/livingstone-island/ and https://www.victoriafalls-guide.net/victoria-falls-activities.html. These sources establish regional activities, not Dove Journeys supplier agreements or rates. Confirm operational arrangements before accepting bookings.
+
+The first-visit notice stores accept/decline under `dove-journeys-terms-v1`. Both choices allow browsing and questions. The footer reopens the notice. Booking requests require a separate terms acknowledgement. `/terms` explains the request process and explicitly states that cancellation, refund and payment policies are not yet published; it does not invent those policies.

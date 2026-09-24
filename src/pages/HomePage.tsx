@@ -46,7 +46,7 @@ export function HomePage() {
         <span>Local knowledge. Lasting memories.</span>
       </div>
       <section id="discover" className="intro-section">
-        <span className="eyebrow">WELCOME TO WILDTRACK SAFARIS</span>
+        <span className="eyebrow">WELCOME TO DOVE JOURNEYS</span>
         <h2>
           There’s Africa.
           <br />
@@ -58,9 +58,10 @@ export function HomePage() {
           for. We bring them together in a safari that feels entirely your own.
         </p>
         <Link className="text-link" to="/about">
-          Discover the Wildtrack way <span>↗</span>
+          Discover the Dove Journeys way <span>↗</span>
         </Link>
       </section>
+      <section className="section-wrap local-activities"><span className="eyebrow">VICTORIA FALLS & LIVINGSTONE</span><h2>Two sides of the Zambezi.<br /><em>One unforgettable journey.</em></h2><p>Discover guided Falls walks, sunset cruises, scenic flights, rafting, wildlife drives and cultural visits. Explore Zimbabwe’s Victoria Falls and Livingstone on the Zambian side, then choose the experiences you want us to arrange.</p><Link className="primary-btn" to="/safaris">Explore our activities ↗</Link></section>
       <section
         className="photo-story section-wrap"
         aria-labelledby="photo-story-heading"
@@ -129,33 +130,33 @@ export function HomePage() {
             </h2>
           </div>
           <Link className="text-link" to="/safaris">
-            Explore all safaris <span>↗</span>
+            Explore all activities <span>↗</span>
           </Link>
         </div>
         <div className="destination-grid">
           {[
             {
-              name: "Kenya",
-              tag: "THE HEART OF THE SAVANNAH",
-              image: "giraffe-savannah",
-              filter: "Kenya",
-            },
-            {
-              name: "Tanzania",
-              tag: "A FRONT-ROW SEAT TO THE WILD",
-              image: "plains",
-              filter: "Tanzania",
-            },
-            {
-              name: "Botswana",
-              tag: "WILDERNESS, WITHOUT LIMITS",
+              name: "Victoria Falls",
+              tag: "ZIMBABWE · FALLS, RIVER & WILDLIFE",
               image: "elephants-golden",
-              filter: "Botswana",
+              filter: "Victoria Falls, Zimbabwe",
+            },
+            {
+              name: "Livingstone",
+              tag: "ZAMBIA · DISCOVER THE ZAMBEZI",
+              image: "safari",
+              filter: "Livingstone & Zambezi, Zambia",
+            },
+            {
+              name: "Both sides of the river",
+              tag: "BUILD YOUR OWN ACTIVITY PLAN",
+              image: "wildlife",
+              filter: "All activities",
             },
           ].map((item) => (
             <Link
               className="destination-card"
-              to={`/safaris?region=${item.filter}`}
+              to={`/safaris?region=${encodeURIComponent(item.filter)}`}
               key={item.name}
             >
               <img
@@ -264,7 +265,7 @@ export function HomePage() {
           A quieter mind. A wider horizon. A collection of moments to carry with
           you, long after the journey home.
         </blockquote>
-        <span className="eyebrow">THE SPIRIT OF WILDTRACK</span>
+        <span className="eyebrow">THE SPIRIT OF DOVE JOURNEYS</span>
       </section>
     </div>
   );

@@ -1,5 +1,11 @@
 import express from 'express';
 import cors from 'cors';
+import { existsSync } from 'node:fs';
+import { loadEnvFile } from 'node:process';
+
+// Match the local environment file used by Vite; deployment variables take precedence.
+if (existsSync('.env.local')) loadEnvFile('.env.local');
+if (existsSync('.env')) loadEnvFile('.env');
 
 const app = express();
 const port = process.env.PORT || 3001;
@@ -38,5 +44,5 @@ app.post('/api/paypal/create-order', async (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`Safari template backend running on http://localhost:${port}`);
+  console.log(`Dove Journeys backend running on http://localhost:${port}`);
 });

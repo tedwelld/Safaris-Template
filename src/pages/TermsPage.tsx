@@ -1,0 +1,12 @@
+import { Link } from 'react-router-dom';
+export function TermsPage() {
+  return <div className="route-page"><section className="page-intro"><span className="eyebrow">BEFORE YOU MAKE PLANS</span><h1>Terms & conditions</h1><p>How website requests and activity quotations work.</p></section><section className="terms-content section-wrap">
+    <h2>Requests and confirmation</h2><p>Submitting or emailing a request does not create a confirmed booking. The Dove Journeys team must confirm the activity, operator, dates, availability and price with you before you commit. This website does not collect payment.</p>
+    <h2>Activity prices and inclusions</h2><p>“Quote required” means that a rate has not yet been published. A priced subtotal includes only activities with published rates and is not a complete total when other selected activities are unpriced. Your written quote will explain currency, guest rates, park fees, transfers, meals and other inclusions or exclusions.</p>
+    <h2>Changes, cancellations and refunds</h2><p>Cancellation, refund, payment and amendment policies have not yet been published on this website. Ask the team for the applicable written policies for your chosen activities and review them before confirming or paying. Do not assume that a request reserves a place or that a cancellation will be free.</p>
+    <h2>Activity suitability and conditions</h2><p>Activities depend on operator availability, weather, water levels and safety decisions. Tell the team about children’s ages and relevant accessibility or participation needs so they can check suitability. Cross-border arrangements and required travel documents must be confirmed for your itinerary.</p>
+    <h2>Email and WhatsApp</h2><p>The email form prepares a message in your own email application. You must press Send there; preparing a message alone does not deliver it. WhatsApp opens an external service. Share only information needed for your request and avoid sending payment card details or identity documents in an initial enquiry.</p>
+    <h2>Your choice</h2><p>You may accept or decline the first-visit notice. Your choice is stored in this browser and can be changed using “Review terms preference” in the footer. Declining does not prevent browsing or general enquiries. Booking requests ask you to acknowledge these request conditions separately; the final booking policies will accompany your quote.</p>
+    <Link className="text-link" to="/contact">Ask about your arrangements ↗</Link>
+  </section></div>;
+}

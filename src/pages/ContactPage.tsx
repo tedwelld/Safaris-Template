@@ -1,11 +1,6 @@
-import { useSearchParams } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { EnquiryForm } from "../components/EnquiryForm";
-const supportEmail =
-  import.meta.env.VITE_EMAIL_SUPPORT || "reservations@wildtracktravel.com";
-const whatsappNumber = import.meta.env.VITE_WHATSAPP_NUMBER || "";
-const whatsappMessage =
-  import.meta.env.VITE_WHATSAPP_MESSAGE ||
-  "Hi%20I%20want%20to%20plan%20a%20safari";
+import { supportEmail, whatsappUrl } from "../config";
 export function ContactPage() {
   const [params] = useSearchParams();
   return (
@@ -28,7 +23,7 @@ export function ContactPage() {
           are in your dreaming, we’d love to hear from you.
         </p>
       </section>
-      <div className="contact-layout">
+      <div className="contact-layout" id="request-form">
         <EnquiryForm
           key={params.get("interest")}
           interest={params.get("interest") || ""}
@@ -49,14 +44,14 @@ export function ContactPage() {
             Tell us what you’re imagining. We’ll help you explore the
             destinations, seasons, and experiences that suit you.
           </p>
-          <a className="text-link" href={`mailto:${supportEmail}`}>
-            {supportEmail}
-          </a>
-          {whatsappNumber && (
+          {supportEmail && <Link className="text-link" to="/contact#request-form">
+            Email our team
+          </Link>}
+          {whatsappUrl && (
             <p>
               <a
                 className="text-link"
-                href={`https://wa.me/${whatsappNumber.replace(/\D/g, "")}?text=${whatsappMessage}`}
+                href={whatsappUrl}
                 target="_blank"
                 rel="noreferrer"
               >

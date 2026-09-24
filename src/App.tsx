@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link, NavLink, Route, Routes, useLocation } from "react-router-dom";
 import "./App.css";
+import { ClientAccess } from "./components/ClientAccess";
+import { TermsPage } from "./pages/TermsPage";
 import { AboutPage } from "./pages/AboutPage";
 import { BookingPage } from "./pages/BookingPage";
 import { ContactPage } from "./pages/ContactPage";
@@ -9,17 +11,17 @@ import { HomePage } from "./pages/HomePage";
 import { SafarisPage } from "./pages/SafarisPage";
 
 const navItems = [
-  { label: "Our safaris", to: "/safaris" },
-  { label: "The Wildtrack way", to: "/about" },
+  { label: "Home", to: "/" },
+  { label: "Activities", to: "/safaris" },
+  { label: "The Dove Journeys way", to: "/about" },
   { label: "Safari essentials", to: "/faq" },
   { label: "Get in touch", to: "/contact" },
 ];
-const supportEmail =
-  import.meta.env.VITE_EMAIL_SUPPORT || "reservations@wildtracktravel.com";
+import { supportEmail, poweredByWhatsappUrl } from "./config";
 
 const bottomNavItems = [
   { label: "Home", to: "/", icon: "pi-home" },
-  { label: "Safaris", to: "/safaris", icon: "pi-compass" },
+  { label: "Activities", to: "/safaris", icon: "pi-compass" },
   { label: "Plan", to: "/booking", icon: "pi-calendar" },
   { label: "About", to: "/about", icon: "pi-users" },
   { label: "Contact", to: "/contact", icon: "pi-envelope" },
@@ -28,11 +30,11 @@ const bottomNavItems = [
 
 function Brand() {
   return (
-    <Link to="/" className="brand" aria-label="Wildtrack Safaris home">
-      <span className="brand-symbol">✳</span>
-      <span>
-        WILDTRACK<small>S A F A R I S</small>
-      </span>
+    <Link to="/" className="brand" aria-label="Dove Journeys home">
+      <picture>
+        <source media="(prefers-color-scheme: dark)" srcSet="/images/dove-journeys-dark.png" />
+        <img className="brand-logo" src="/images/dove-journeys-light.png" alt="Dove Journeys — Your journey changes lives" width="1080" height="590" />
+      </picture>
     </Link>
   );
 }
@@ -40,8 +42,12 @@ function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const location = useLocation();
   useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [location.pathname]);
+    if (location.hash) {
+      document.getElementById(location.hash.slice(1))?.scrollIntoView();
+    } else {
+      window.scrollTo(0, 0);
+    }
+  }, [location.pathname, location.hash]);
   useEffect(() => {
     const handleKey = (event: KeyboardEvent) => {
       if (event.key === "Escape") setMenuOpen(false);
@@ -64,7 +70,7 @@ function App() {
         <Brand />
         <nav className="nav" aria-label="Main navigation">
           {navItems.map((item) => (
-            <NavLink key={item.to} to={item.to} className="nav-link">
+            <NavLink key={item.to} to={item.to} end={item.to === "/"} className="nav-link">
               {item.label}
             </NavLink>
           ))}
@@ -93,6 +99,7 @@ function App() {
               <NavLink
                 key={item.to}
                 to={item.to}
+                end={item.to === "/"}
                 onClick={() => setMenuOpen(false)}
               >
                 {item.label}
@@ -110,6 +117,7 @@ function App() {
           <Route path="/booking" element={<BookingPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/faq" element={<FaqPage />} />
+          <Route path="/terms" element={<TermsPage />} />
           <Route
             path="*"
             element={
@@ -157,22 +165,27 @@ function App() {
           </div>
           <div>
             <h3>Explore</h3>
-            <Link to="/safaris">Our safari collection</Link>
-            <Link to="/about">The Wildtrack way</Link>
+            <Link to="/safaris">Victoria Falls & Zambezi activities</Link>
+            <Link to="/about">The Dove Journeys way</Link>
             <Link to="/faq">Safari essentials</Link>
           </div>
           <div>
             <h3>Let’s connect</h3>
-            <a href={`mailto:${supportEmail}`}>{supportEmail}</a>
+            {supportEmail && <Link to="/contact#request-form">Email our team</Link>}
+            <Link to="/terms">Terms and conditions</Link>
             <Link to="/contact">Speak to a specialist ↗</Link>
             <Link to="/booking">Plan your journey ↗</Link>
           </div>
         </div>
         <div className="footer-bottom">
           <span>
-            © {new Date().getFullYear()} Wildtrack Safaris. All rights reserved.
+            © {new Date().getFullYear()} Dove Journeys. All rights reserved.
           </span>
-          <span>Made for the extraordinary.</span>
+          {poweredByWhatsappUrl && (
+            <a className="powered-by" href={poweredByWhatsappUrl} target="_blank" rel="noreferrer">
+              Powered by Axentra Tech Solutions
+            </a>
+          )}
         </div>
       </footer>
       <nav className="bottom-nav" aria-label="Quick navigation">
@@ -189,6 +202,7 @@ function App() {
           </NavLink>
         ))}
       </nav>
+      <ClientAccess />
     </div>
   );
 }
