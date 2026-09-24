@@ -65,3 +65,9 @@ Public contact links use `VITE_EMAIL_SUPPORT` and `VITE_WHATSAPP_NUMBER` from `.
 Activity context was checked against https://www.zambiatourism.com/activities/livingstone/, https://www.zambiatourism.com/activities/adventure/livingstone-island/ and https://www.victoriafalls-guide.net/victoria-falls-activities.html. These sources establish regional activities, not Dove Journeys supplier agreements or rates. Confirm operational arrangements before accepting bookings.
 
 The first-visit notice stores accept/decline under `dove-journeys-terms-v1`. Both choices allow browsing and questions. The footer reopens the notice. Booking requests require a separate terms acknowledgement. `/terms` explains the request process and explicitly states that cancellation, refund and payment policies are not yet published; it does not invent those policies.
+
+## Production contact buttons (Vercel)
+
+`.env.production` contains only public contact values and is included in Git so Vite production builds can render the WhatsApp, email and developer-credit links. `.env.example` is documentation and is not loaded by Vite; `.env.local` is ignored by Git and is not present in a Git-based deployment.
+
+Push `.env.production` and the `.gitignore` exception, then redeploy. Hosting environment variables override file values: if `VITE_EMAIL_SUPPORT`, `VITE_WHATSAPP_NUMBER` or `VITE_AXENTRA_WHATSAPP_NUMBER` already exist in Vercel, ensure they contain the correct nonempty values (or remove those overrides to use the file). Environment changes require a new build. Keep secrets and server-only settings out of `.env.production`.
