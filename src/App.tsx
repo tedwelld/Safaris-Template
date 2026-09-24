@@ -171,7 +171,7 @@ function App() {
           </div>
           <div>
             <h3>Let’s connect</h3>
-            {supportEmail && <Link to="/contact#request-form">Email our team</Link>}
+            {supportEmail && <Link to="/contact#request-form">{supportEmail}</Link>}
             <Link to="/terms">Terms and conditions</Link>
             <Link to="/contact">Speak to a specialist ↗</Link>
             <Link to="/booking">Plan your journey ↗</Link>
