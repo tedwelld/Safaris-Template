@@ -2,6 +2,7 @@
 // Run on port 3002 and set Vite's BOKUN_PROXY_TARGET=http://127.0.0.1:3002.
 import express from 'express';
 import { catalogueProduct, filterCatalogue } from '../bokun-catalogue.js';
+import { registerBookingLookup } from '../booking-lookup.js';
 const app = express();
 app.use(express.json());
 const product = {
@@ -49,14 +50,25 @@ app.get('/api/bokun/cart/:uuid/checkout', (req, res) => {
 app.post('/api/bokun/cart/:uuid/checkout', (req, res) => { completed.add(req.params.uuid); res.json({ booking: { confirmationCode: 'LOCAL-TEST-ONLY', status: 'CONFIRMED', totalPaid: 0, totalDue: 0, currency: 'USD' } }); });
 app.get('/api/bokun/cart/:uuid/result', (req, res) => res.json(completed.has(req.params.uuid) ? { verified: true, booking: { confirmationCode: 'LOCAL-TEST-ONLY', status: 'CONFIRMED', totalPaid: 0, totalDue: 0, currency: 'USD' } } : { verified: false }));
 app.get('/api/bokun/cart/:uuid/documents', (req, res) => res.json({ documents: completed.has(req.params.uuid) ? (carts.get(req.params.uuid)?.activityBookings || []).map(item => ({ id: item.productConfirmationCode, title: item.activity.title })) : [] }));
-app.get('/api/bokun/cart/:uuid/documents/:code', (req, res) => {
-  if (!completed.has(req.params.uuid) || !carts.get(req.params.uuid)?.activityBookings.some(item => item.productConfirmationCode === req.params.code)) return res.sendStatus(404);
+function testVoucherPdf() {
   const content = 'BT /F1 16 Tf 40 750 Td (LOCAL TEST ONLY - Not valid for travel) Tj ET';
   const objects = ['<< /Type /Catalog /Pages 2 0 R >>', '<< /Type /Pages /Kids [3 0 R] /Count 1 >>', '<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 4 0 R >> >> /Contents 5 0 R >>', '<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>', `<< /Length ${content.length} >>\nstream\n${content}\nendstream`];
   let pdf = '%PDF-1.4\n'; const offsets = [0];
   objects.forEach((object, index) => { offsets.push(Buffer.byteLength(pdf)); pdf += `${index + 1} 0 obj\n${object}\nendobj\n`; });
   const startxref = Buffer.byteLength(pdf);
   pdf += `xref\n0 6\n0000000000 65535 f \n${offsets.slice(1).map(offset => `${String(offset).padStart(10, '0')} 00000 n `).join('\n')}\ntrailer\n<< /Size 6 /Root 1 0 R >>\nstartxref\n${startxref}\n%%EOF`;
-  res.set({ 'Content-Type': 'application/pdf', 'Content-Disposition': 'attachment; filename="local-test-voucher.pdf"' }).send(pdf);
+  return pdf;
+}
+app.get('/api/bokun/cart/:uuid/documents/:code', (req, res) => {
+  if (!completed.has(req.params.uuid) || !carts.get(req.params.uuid)?.activityBookings.some(item => item.productConfirmationCode === req.params.code)) return res.sendStatus(404);
+  res.set({ 'Content-Type': 'application/pdf', 'Content-Disposition': 'attachment; filename="local-test-voucher.pdf"' }).send(testVoucherPdf());
+});
+registerBookingLookup(app, {
+  api: async (_method, path, _body, raw) => {
+    if (path === '/booking.json/booking/LOCAL-TEST-ONLY') return { confirmationCode: 'LOCAL-TEST-ONLY', status: 'CONFIRMED', customer: { email: 'guest@example.test' }, currency: 'USD', totalPrice: 65, totalPaid: 65, totalDue: 0, activityBookings: [{ activity: { title: 'Zambezi sunset cruise · LOCAL TEST DATA' }, productConfirmationCode: 'LOCAL-LOOKUP-TICKET', date: '2026-11-02', startTime: '16:00', status: 'CONFIRMED', totalParticipants: 1 }] };
+    if (raw && path === '/booking.json/activity-booking/LOCAL-LOOKUP-TICKET/ticket') return new Response(testVoucherPdf());
+    throw Object.assign(new Error('Not found'), { status: 404 });
+  },
+  sendCode: async () => {}, createCode: () => '123456',
 });
 app.listen(3002, '127.0.0.1', () => console.log('LOCAL TEST DATA ONLY — UI fixture listening on http://127.0.0.1:3002'));

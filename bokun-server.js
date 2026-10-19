@@ -2,6 +2,8 @@ import { createHmac } from 'node:crypto';
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { catalogueProduct, filterCatalogue } from './bokun-catalogue.js';
+import { registerBookingLookup } from './booking-lookup.js';
+import { bookingDocuments, sendBookingVoucher } from './bokun-documents.js';
 
 // Only these application operations are exposed; this is not an open API proxy.
 export function registerBokun(app) {
@@ -51,6 +53,7 @@ export function registerBokun(app) {
       res.json(await fn(req));
     } catch (error) { res.status(error.status || 502).json({ message: error.message || 'Bookings are temporarily unavailable.' }); }
   };
+  registerBookingLookup(app, { api });
   app.get('/api/bokun/products', route(req => api('POST', '/activity.json/search', {
     page: Math.max(1, Math.min(1000, Number(req.query.page) || 1)), pageSize: 24,
     ...(req.query.text ? { textFilter: { text: String(req.query.text).slice(0, 150), searchTitle: true, searchKeywords: true, searchFullText: true } } : {}),
@@ -160,29 +163,17 @@ export function registerBokun(app) {
     const booking = await api('GET', `/booking.json/booking/${encodeURIComponent(code)}`);
     return { verified: true, booking: { confirmationCode: booking.confirmationCode, status: booking.status, totalPaid: booking.totalPaid, totalDue: booking.totalDue, currency: booking.currency } };
   }));
-  async function confirmedDocuments(uuid) {
+  async function checkoutBooking(uuid) {
     if (!uuidPattern.test(uuid)) throw Object.assign(new Error('Invalid checkout.'), { status: 400 });
     const code = getState(uuid)?.result?.booking?.confirmationCode;
     if (!code) throw Object.assign(new Error('No completed checkout was found in this browser.'), { status: 404 });
-    const booking = await api('GET', `/booking.json/booking/${encodeURIComponent(code)}`);
-    if (booking.status !== 'CONFIRMED') throw Object.assign(new Error('Vouchers are available once your booking is confirmed.'), { status: 409 });
-    return (booking.activityBookings || [])
-      .filter(item => !item.status || item.status === 'CONFIRMED')
-      .map(item => ({ id: item.productConfirmationCode || item.confirmationCode, title: item.activity?.title || item.product?.title || 'Activity voucher' }))
-      .filter(item => typeof item.id === 'string' && item.id.length);
+    return api('GET', `/booking.json/booking/${encodeURIComponent(code)}`);
   }
-  app.get('/api/bokun/cart/:uuid/documents', route(async req => ({ documents: await confirmedDocuments(req.params.uuid) })));
+  app.get('/api/bokun/cart/:uuid/documents', route(async req => ({ documents: bookingDocuments(await checkoutBooking(req.params.uuid)) })));
   app.get('/api/bokun/cart/:uuid/documents/:document', async (req, res) => {
     res.set({ 'Cache-Control': 'no-store', 'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'no-referrer' });
     try {
-      const documents = await confirmedDocuments(req.params.uuid);
-      const document = documents.find(item => item.id === req.params.document);
-      if (!document) return res.status(404).json({ message: 'This voucher does not belong to your checkout.' });
-      const response = await api('GET', `/booking.json/activity-booking/${encodeURIComponent(document.id)}/ticket`, undefined, true);
-      const pdf = Buffer.from(await response.arrayBuffer());
-      if (pdf.subarray(0, 5).toString() !== '%PDF-') throw new Error('Your supplier’s voucher is not ready yet. Please try again shortly or contact us.');
-      res.set({ 'Content-Type': 'application/pdf', 'Content-Disposition': `attachment; filename="dove-journeys-${document.id.replace(/[^a-z0-9_-]/gi, '')}.pdf"` });
-      res.send(pdf);
+      await sendBookingVoucher(api, await checkoutBooking(req.params.uuid), req.params.document, res);
     } catch (error) { res.status(error.status || 502).json({ message: error.message || 'We could not download this voucher. Please try again.' }); }
   });
 }

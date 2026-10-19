@@ -49,8 +49,9 @@ export interface CheckoutResult {
   travelDocuments?: { activityTickets?: { productTitle: string; ticket: string }[] };
 }
 const base = (import.meta.env.VITE_BOKUN_API_BASE_URL || '').replace(/\/$/, '');
-export async function downloadVoucher(checkoutId: string, documentId: string) {
-  const response = await fetch(`${base}/api/bokun/cart/${encodeURIComponent(checkoutId)}/documents/${encodeURIComponent(documentId)}`);
+export async function downloadVoucher(checkoutId: string | undefined, documentId: string, verificationToken?: string) {
+  const path = verificationToken ? '/lookup' : `/cart/${encodeURIComponent(checkoutId || '')}`;
+  const response = await fetch(`${base}/api/bokun${path}/documents/${encodeURIComponent(documentId)}`, { headers: verificationToken ? { Authorization: `Bearer ${verificationToken}` } : {} });
   if (!response.ok) {
     const data = await response.json().catch(() => ({}));
     throw new Error(data.message || 'Your voucher could not be downloaded. Please try again.');
@@ -61,10 +62,10 @@ export async function downloadVoucher(checkoutId: string, documentId: string) {
   document.body.appendChild(link); link.click(); link.remove();
   setTimeout(() => URL.revokeObjectURL(url), 10000);
 }
-export async function bokun<T>(path: string, body?: unknown, method = body === undefined ? 'GET' : 'POST', signal?: AbortSignal): Promise<T> {
-  const response = await fetch(`${base}/api/bokun${path}`, { method, signal, headers: { 'Content-Type': 'application/json' }, body: body === undefined ? undefined : JSON.stringify(body) });
+export async function bokun<T>(path: string, body?: unknown, method = body === undefined ? 'GET' : 'POST', signal?: AbortSignal, verificationToken?: string): Promise<T> {
+  const response = await fetch(`${base}/api/bokun${path}`, { method, signal, headers: { 'Content-Type': 'application/json', ...(verificationToken ? { Authorization: `Bearer ${verificationToken}` } : {}) }, body: body === undefined ? undefined : JSON.stringify(body) });
   const data = await response.json().catch(() => ({ message: 'Live bookings are temporarily unavailable. Please contact us for help.' }));
-  if (!response.ok) throw new Error(data.message || 'Please try again in a moment.');
+  if (!response.ok) throw Object.assign(new Error(data.message || 'Please try again in a moment.'), { status: response.status });
   return data;
 }
 export function cartId() {

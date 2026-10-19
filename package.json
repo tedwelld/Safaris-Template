@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "server": "node server.js",
-    "test:bokun": "node --test tests/bokun.test.js",
+    "test:bokun": "node --test tests/bokun.test.js tests/booking-lookup.test.js",
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
@@ -14,6 +14,7 @@
   "dependencies": {
     "cors": "^2.8.6",
     "express": "^5.2.1",
+    "nodemailer": "^10.1.7",
     "primeicons": "^8.0.2",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",

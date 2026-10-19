@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { bokun, downloadVoucher } from './api';
 
-export function BookingDocuments({ checkoutId }: { checkoutId: string }) {
+export function BookingDocuments({ checkoutId, verificationToken }: { checkoutId?: string; verificationToken?: string }) {
   const [documents, setDocuments] = useState<{ id: string; title: string }[]>([]);
   const [loading, setLoading] = useState(true);
   const [downloading, setDownloading] = useState('');
@@ -9,14 +9,15 @@ export function BookingDocuments({ checkoutId }: { checkoutId: string }) {
   const [retry, setRetry] = useState(0);
   useEffect(() => {
     const controller = new AbortController();
-    bokun<{ documents: { id: string; title: string }[] }>(`/cart/${checkoutId}/documents`, undefined, 'GET', controller.signal)
+    const path = verificationToken ? '/lookup/documents' : `/cart/${checkoutId}/documents`;
+    bokun<{ documents: { id: string; title: string }[] }>(path, undefined, 'GET', controller.signal, verificationToken)
       .then(data => setDocuments(data.documents)).catch(reason => { if (!controller.signal.aborted) setError(reason.message); })
       .finally(() => { if (!controller.signal.aborted) setLoading(false); });
     return () => controller.abort();
-  }, [checkoutId, retry]);
+  }, [checkoutId, verificationToken, retry]);
   async function download(id: string) {
     setDownloading(id); setError('');
-    try { await downloadVoucher(checkoutId, id); }
+    try { await downloadVoucher(checkoutId, id, verificationToken); }
     catch (reason) { setError((reason as Error).message); }
     finally { setDownloading(''); }
   }

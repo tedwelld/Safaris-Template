@@ -14,6 +14,7 @@ import { CartPage } from "./pages/CartPage";
 import { CheckoutPage, CheckoutReturnPage } from "./pages/CheckoutPage";
 import './bokun/bokun.css';
 import { HeaderCart } from './bokun/HeaderCart';
+import { BookingLookupPage } from './pages/BookingLookupPage';
 
 const navItems = [
   { label: "Home", to: "/", icon: "pi-home" },
@@ -81,9 +82,11 @@ function App() {
       <div className="fixed-header" ref={fixedHeader}>
       <div className="utility-bar">
         <span>EXTRAORDINARY PLACES. PERSONAL JOURNEYS.</span>
+        <div className="utility-links"><Link to="/my-booking">My booking <i className="pi pi-ticket" aria-hidden="true" /></Link>
         <Link to="/contact">
           Talk to a safari specialist <i className="pi pi-arrow-up-right" aria-hidden="true" />
         </Link>
+        </div>
       </div>
       <header className="topbar">
         <Brand />
@@ -117,7 +120,7 @@ function App() {
           className="mobile-menu"
           aria-label="Mobile navigation"
         >
-          {[...navItems, { label: "Plan your safari", to: "/booking", icon: "pi-calendar" }].map(
+          {[...navItems, { label: "My booking", to: "/my-booking", icon: "pi-ticket" }, { label: "Plan your safari", to: "/booking", icon: "pi-calendar" }].map(
             (item) => (
               <NavLink
                 key={item.to}
@@ -145,6 +148,7 @@ function App() {
           <Route path="/cart" element={<CartPage />} />
           <Route path="/checkout" element={<CheckoutPage />} />
           <Route path="/checkout/return" element={<CheckoutReturnPage />} />
+          <Route path="/my-booking" element={<BookingLookupPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/faq" element={<FaqPage />} />
           <Route path="/terms" element={<TermsPage />} />
@@ -197,6 +201,7 @@ function App() {
             <h3>Explore</h3>
             <Link to="/activities">All activities & experiences</Link>
             <Link to="/cart">Your booking selection</Link>
+            <Link to="/my-booking">Find my booking & vouchers</Link>
             <Link to="/about">The Dove Journeys way</Link>
             <Link to="/faq">Safari essentials</Link>
           </div>
