@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "server": "node server.js",
+    "test:bokun": "node --test tests/bokun.test.js",
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",

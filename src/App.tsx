@@ -1,5 +1,5 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
-import { Link, NavLink, Route, Routes, useLocation } from "react-router-dom";
+import { Link, Navigate, NavLink, Route, Routes, useLocation } from "react-router-dom";
 import "./App.css";
 import { ClientAccess } from "./components/ClientAccess";
 import { TermsPage } from "./pages/TermsPage";
@@ -8,11 +8,16 @@ import { BookingPage } from "./pages/BookingPage";
 import { ContactPage } from "./pages/ContactPage";
 import { FaqPage } from "./pages/FaqPage";
 import { HomePage } from "./pages/HomePage";
-import { SafarisPage } from "./pages/SafarisPage";
+import { ActivitiesPage } from "./pages/ActivitiesPage";
+import { ProductPage } from "./pages/ProductPage";
+import { CartPage } from "./pages/CartPage";
+import { CheckoutPage, CheckoutReturnPage } from "./pages/CheckoutPage";
+import './bokun/bokun.css';
+import { HeaderCart } from './bokun/HeaderCart';
 
 const navItems = [
   { label: "Home", to: "/", icon: "pi-home" },
-  { label: "Activities", to: "/safaris", icon: "pi-compass" },
+  { label: "Activities", to: "/activities", icon: "pi-compass" },
   { label: "The Dove Journeys way", to: "/about", icon: "pi-users" },
   { label: "Safari essentials", to: "/faq", icon: "pi-question-circle" },
   { label: "Get in touch", to: "/contact", icon: "pi-envelope" },
@@ -26,6 +31,17 @@ function Brand() {
       <img className="brand-logo" src="/images/dove-journeys-transparent.png" alt="Dove Journeys — Your journey changes lives" width="1862" height="845" />
     </Link>
   );
+}
+function ActivitiesRedirect() {
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
+  const region = params.get('region');
+  if (region) {
+    if (!params.has('q') && region !== 'All activities') params.set('q', region.startsWith('Victoria') ? 'Victoria Falls' : 'Livingstone');
+    params.delete('region');
+  }
+  const search = params.toString();
+  return <Navigate replace to={`/activities${search ? `?${search}` : ''}${location.hash}`} />;
 }
 function App() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -79,9 +95,11 @@ function App() {
             </NavLink>
           ))}
         </nav>
+        <div className="header-actions">
         <Link className="primary-btn desktop-cta" to="/booking">
           Plan your safari <i className="pi pi-arrow-up-right" aria-hidden="true" />
         </Link>
+        <HeaderCart />
         <button
           className="menu-toggle"
           aria-label={menuOpen ? "Close menu" : "Open menu"}
@@ -91,6 +109,7 @@ function App() {
         >
           <i className={`pi ${menuOpen ? "pi-times" : "pi-bars"}`} aria-hidden="true" />
         </button>
+        </div>
       </header>
       {menuOpen && (
         <nav
@@ -118,8 +137,14 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/about" element={<AboutPage />} />
-          <Route path="/safaris" element={<SafarisPage />} />
+          <Route path="/activities" element={<ActivitiesPage />} />
+          <Route path="/safaris" element={<ActivitiesRedirect />} />
           <Route path="/booking" element={<BookingPage />} />
+          <Route path="/experiences" element={<ActivitiesRedirect />} />
+          <Route path="/product/:id" element={<ProductPage />} />
+          <Route path="/cart" element={<CartPage />} />
+          <Route path="/checkout" element={<CheckoutPage />} />
+          <Route path="/checkout/return" element={<CheckoutReturnPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/faq" element={<FaqPage />} />
           <Route path="/terms" element={<TermsPage />} />
@@ -170,7 +195,8 @@ function App() {
           </div>
           <div>
             <h3>Explore</h3>
-            <Link to="/safaris">Victoria Falls & Zambezi activities</Link>
+            <Link to="/activities">All activities & experiences</Link>
+            <Link to="/cart">Your booking selection</Link>
             <Link to="/about">The Dove Journeys way</Link>
             <Link to="/faq">Safari essentials</Link>
           </div>

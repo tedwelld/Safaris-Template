@@ -1,4 +1,6 @@
 import { Link } from "react-router-dom";
+import { HomeAvailabilityForm } from '../bokun/HomeAvailabilityForm';
+import { FeaturedProducts } from '../bokun/FeaturedProducts';
 
 export function HomePage() {
   return (
@@ -25,7 +27,7 @@ export function HomePage() {
             <br />
             Discover the wild, and a little of yourself.
           </p>
-          <Link className="light-btn" to="/safaris">
+          <Link className="light-btn" to="/activities">
             Find your extraordinary <i className="pi pi-arrow-up-right" aria-hidden="true" />
           </Link>
         </div>
@@ -38,6 +40,7 @@ export function HomePage() {
           </a>
         </div>
       </section>
+      <HomeAvailabilityForm />
       <div className="promise-strip">
         <span>Personally crafted journeys</span>
         <span className="star"><i className="pi pi-sparkles" aria-hidden="true" /></span>
@@ -61,7 +64,7 @@ export function HomePage() {
           Discover the Dove Journeys way <i className="pi pi-arrow-up-right" aria-hidden="true" />
         </Link>
       </section>
-      <section className="section-wrap local-activities"><span className="eyebrow">VICTORIA FALLS & LIVINGSTONE</span><h2>Two sides of the Zambezi.<br /><em>One unforgettable journey.</em></h2><p>Discover guided Falls walks, sunset cruises, scenic flights, rafting, wildlife drives and cultural visits. Explore Zimbabwe’s Victoria Falls and Livingstone on the Zambian side, then choose the experiences you want us to arrange.</p><Link className="primary-btn" to="/safaris">Explore our activities <i className="pi pi-arrow-up-right" aria-hidden="true" /></Link></section>
+      <FeaturedProducts />
       <section
         className="photo-story section-wrap"
         aria-labelledby="photo-story-heading"
@@ -129,7 +132,7 @@ export function HomePage() {
               <em>Into the wild.</em>
             </h2>
           </div>
-          <Link className="text-link" to="/safaris">
+          <Link className="text-link" to="/activities">
             Explore all activities <i className="pi pi-arrow-up-right" aria-hidden="true" />
           </Link>
         </div>
@@ -156,7 +159,7 @@ export function HomePage() {
           ].map((item) => (
             <Link
               className="destination-card"
-              to={`/safaris?region=${encodeURIComponent(item.filter)}`}
+              to={item.filter === 'All activities' ? '/activities' : `/activities?q=${encodeURIComponent(item.name)}`}
               key={item.name}
             >
               <img
