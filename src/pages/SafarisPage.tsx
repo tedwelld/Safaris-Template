@@ -8,6 +8,7 @@ export function SafarisPage() {
   return <div className="route-page">
     <section className="page-intro"><span className="eyebrow">TWO COUNTRIES. ONE EXTRAORDINARY RIVER.</span><h1>Victoria Falls & <em>the Zambezi.</em></h1><p>Explore activities in Victoria Falls, Zimbabwe, and around Livingstone on Zambia’s Zambezi side. Choose your favourites and ask us to plan the details.</p></section>
     <section className="section-wrap">
+      <div className="bk-discovery"><div><span className="eyebrow">READY TO MAKE IT HAPPEN?</span><h2>Find your experience.</h2><p>Explore bookable experiences, choose your date and check live availability.</p></div><Link className="primary-btn" to="/experiences">Book experiences <i className="pi pi-arrow-up-right" aria-hidden="true" /></Link></div>
       <div className="filter-bar" aria-label="Filter activities by location">{regions.map(item => <button key={item} aria-pressed={region === item} className={region === item ? 'selected' : ''} onClick={() => setParams(item === regions[0] ? {} : { region: item })}>{item}</button>)}</div>
       <div className="safari-grid">{filtered.map(item => <article className="safari-card" key={item.id}>
         <div className="safari-card-body"><i className={`pi ${item.icon} activity-icon`} aria-hidden="true" /><span className="eyebrow">{item.region} · {item.duration}</span><h2>{item.title}</h2><p>{item.description}</p><p>{item.details}</p><p className="activity-note">{item.note}</p>

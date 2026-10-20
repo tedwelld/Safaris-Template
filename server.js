@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import { existsSync } from 'node:fs';
 import { loadEnvFile } from 'node:process';
+import { registerBokun } from './bokun-server.js';
 
 // Match the local environment file used by Vite; deployment variables take precedence.
 if (existsSync('.env.local')) loadEnvFile('.env.local');
@@ -12,6 +13,7 @@ const port = process.env.PORT || 3001;
 
 app.use(cors());
 app.use(express.json());
+registerBokun(app);
 
 app.post('/api/lead', (req, res) => {
   const { name, email, tripInterest, message } = req.body || {};

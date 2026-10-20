@@ -1,21 +1,7 @@
-import { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { EnquiryForm } from "../components/EnquiryForm";
-const bokunWidgetUrl = import.meta.env.VITE_BOKUN_WIDGET_URL || "";
 export function BookingPage() {
   const [params] = useSearchParams();
-  const [widgetFailed, setWidgetFailed] = useState(false);
-  useEffect(() => {
-    if (!bokunWidgetUrl) return;
-    const script = document.createElement("script");
-    script.src = bokunWidgetUrl;
-    script.async = true;
-    script.onerror = () => setWidgetFailed(true);
-    document.body.appendChild(script);
-    return () => {
-      script.remove();
-    };
-  }, []);
   return (
     <div className="route-page">
       <section className="page-intro photographic-intro ">
@@ -45,27 +31,7 @@ export function BookingPage() {
             interest={params.get("trip") || ""}
             planning
           />
-          {bokunWidgetUrl && (
-            <section
-              className="booking-widget-panel"
-              aria-label="Safari availability"
-            >
-              {widgetFailed ? (
-                <p role="status">
-                  Live availability is temporarily unavailable. Please use the
-                  enquiry form above.
-                </p>
-              ) : (
-                <>
-                  <p>
-                    Explore live availability, or enquire above for a personal
-                    itinerary.
-                  </p>
-                  <div className="bokun-widget" data-bokun-widget="true" />
-                </>
-              )}
-            </section>
-          )}
+          <section className="booking-widget-panel"><h2>Already know your next adventure?</h2><p>Explore our experiences and choose your preferred date with live availability.</p><Link className="primary-btn" to="/activities">Book an experience <i className="pi pi-arrow-up-right" aria-hidden="true" /></Link></section>
         </div>
         <aside className="contact-panel">
           <img
