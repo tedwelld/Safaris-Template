@@ -66,6 +66,8 @@ Activity context was checked against https://www.zambiatourism.com/activities/li
 
 The first-visit notice stores accept/decline under `dove-journeys-terms-v1`. Both choices allow browsing and questions. The footer reopens the notice. Booking requests require a separate terms acknowledgement. `/terms` explains the request process and explicitly states that cancellation, refund and payment policies are not yet published; it does not invent those policies.
 
+`public/sitemap.xml` indexes the public page sitemap in `public/sitemaps/pages.xml`. `public/robots.txt` points crawlers to the index. Update the canonical host in these files if the production domain changes. The terms notice includes the full terms text and records an explicit agreement or decline in the visitor's browser.
+
 ## Production contact buttons (Vercel)
 
 `.env.production` contains only public contact values and is included in Git so Vite production builds can render the WhatsApp, email and developer-credit links. `.env.example` is documentation and is not loaded by Vite; `.env.local` is ignored by Git and is not present in a Git-based deployment.
