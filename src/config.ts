@@ -1,5 +1,5 @@
 // Public contact values are supplied by Vite at build time.
-export const supportEmail = (import.meta.env.VITE_EMAIL_SUPPORT || "").trim();
+export const supportEmail = (import.meta.env.VITE_EMAIL_SUPPORT || "admin@dovejourneytours.com").trim();
 const whatsappNumber = (import.meta.env.VITE_WHATSAPP_NUMBER || "").replace(/\D/g, "");
 const whatsappMessage = import.meta.env.VITE_WHATSAPP_MESSAGE || "";
 export const whatsappUrl = whatsappNumber
