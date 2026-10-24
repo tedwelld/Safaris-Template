@@ -4,6 +4,7 @@ import { resolve } from 'node:path';
 import { catalogueProduct, filterCatalogue } from './bokun-catalogue.js';
 import { registerBookingLookup } from './booking-lookup.js';
 import { bookingDocuments, sendBookingVoucher } from './bokun-documents.js';
+import { createBookingEmailSender } from './booking-emails.js';
 
 // Only these application operations are exposed; this is not an open API proxy.
 export function registerBokun(app) {
@@ -12,6 +13,8 @@ export function registerBokun(app) {
   const secret = process.env.BOKUN_SECRET_KEY;
   const currency = process.env.BOKUN_CURRENCY || 'USD';
   const checkouts = new Map();
+  const sendBookingEmail = createBookingEmailSender();
+  const notificationsInProgress = new Set();
   const stateDirectory = resolve(process.env.BOKUN_STATE_DIRECTORY || '.bokun-checkouts');
   function getState(uuid) {
     if (checkouts.has(uuid)) return checkouts.get(uuid);
@@ -157,10 +160,31 @@ export function registerBokun(app) {
     }
   }));
   app.get('/api/bokun/cart/:uuid/result', route(async req => {
-    const result = getState(req.params.uuid)?.result;
+    const state = getState(req.params.uuid);
+    const result = state?.result;
     const code = result?.booking?.confirmationCode;
     if (!code) return { verified: false };
     const booking = await api('GET', `/booking.json/booking/${encodeURIComponent(code)}`);
+    if (String(booking.status).toUpperCase() === 'CONFIRMED' && !notificationsInProgress.has(req.params.uuid)) {
+      const uuid = req.params.uuid;
+      notificationsInProgress.add(uuid);
+      void (async () => {
+        try {
+          state.emailNotifications ||= {};
+          for (const recipient of ['admin', 'guest']) {
+            if (state.emailNotifications[recipient]) continue;
+            try {
+              const sent = await sendBookingEmail(booking, recipient);
+              state.emailNotifications[recipient] = sent ? 'sent' : 'skipped';
+              saveState(uuid, state);
+            } catch {
+              // Email delivery must not change the result of a booking that Bókun confirmed.
+              console.warn(`Booking ${recipient} notification failed for a confirmed checkout.`);
+            }
+          }
+        } finally { notificationsInProgress.delete(uuid); }
+      })();
+    }
     return { verified: true, booking: { confirmationCode: booking.confirmationCode, status: booking.status, totalPaid: booking.totalPaid, totalDue: booking.totalDue, currency: booking.currency } };
   }));
   async function checkoutBooking(uuid) {
